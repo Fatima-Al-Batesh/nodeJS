@@ -94,9 +94,10 @@ function quit(){
  * @returns {void}
  */
 function help(){
-  console.log('     hello       --Says hello\n')
-  console.log('     help        --Lists all the possible commands\n')
-  console.log('     quit/exit   --Exits the application\n')
+  console.log('     hello              --Says hello!\n')
+  console.log('     hello + name       --Says hello + name!\n')
+  console.log('     help               --Lists all the possible commands\n')
+  console.log('     quit/exit          --Exits the application\n')
 }
 
 // The following line starts the application
