@@ -81,6 +81,7 @@ function quit(){
   process.exit();
 }
 /**
+ * Already documented the help function in the previous commit 
  * Lists all the possible commands
  *
  * @returns {void}
