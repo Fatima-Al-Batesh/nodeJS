@@ -55,6 +55,9 @@ function onDataReceived(text) {
   else if(text0 === 'remove' || text === 'remove'){
     remove(text, text1);
   }
+  else if(text0 === 'edit' || text === 'edit'){
+    edit(text, text1);
+  }
   else{
     unknownCommand(text);
   }
@@ -103,6 +106,7 @@ const i=[];
 tasks.forEach(function callback(value, index) {
   i[index]=index+1;
 });
+
 /**
  * add new tasks
  * @param  {string} task the new task
@@ -114,6 +118,7 @@ function add(text, task){
   }
   else tasks.push(task);
  }
+ 
 
  /**
  * Lists all tasks
@@ -142,6 +147,28 @@ function remove(task, number){
       }else console.log('the number entered does not exist')
   }
 }
+/**
+ * edit a task
+ * @param  {string} task the new task
+ * @returns {void}
+ */
+function edit(text, task){
+  var number = task.substring(0,task.indexOf(' '))
+  number = parseInt(number)
+  var newTask = task.substring(task.indexOf(' ')+1)
+  
+  if (text === 'edit'){
+    console.log("Error: You didn't enter the task")
+  }
+  else if (isNaN(number)){
+    tasks.splice(-1,1,task)
+  }
+  else{
+    tasks.splice(number-1,1,newTask)
+  }
+ }
+ 
+
 /**
  * Exits the application
  *
