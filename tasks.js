@@ -45,6 +45,9 @@ function onDataReceived(text) {
   else if (split[0] === 'help'){
     help();
   } 
+  else if(split[0] === 'list'){
+  list();
+  }
   else{
     unknownCommand(text);
   }
@@ -99,6 +102,18 @@ function help(){
   console.log('     help               --Lists all the possible commands\n')
   console.log('     quit/exit          --Exits the application\n')
 }
+var tasks=['buy bread', 'do exercise']
+/**
+ * Lists all tasks
+ *
+ * @returns {void}
+ */
+function list(){
+  tasks.forEach(function callback(value, index) {
+    console.log(index+1 + '- [ ] ' + value);
+  });
+}
+
 
 // The following line starts the application
 startApp("Fatima Al-Batesh")
