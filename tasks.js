@@ -99,8 +99,10 @@ function help(){
 }
 
 var tasks=['buy bread', 'do exercise']
-
-
+const i=[];
+tasks.forEach(function callback(value, index) {
+  i[index]=index+1;
+});
 /**
  * add new tasks
  * @param  {string} task the new task
@@ -118,9 +120,10 @@ function add(text, task){
  *
  * @returns {void}
  */
+
 function list(){
   tasks.forEach(function callback(value, index) {
-    console.log(index+1 + '- [ ] ' + value);
+    console.log(index+1 + ' - [ ] ' + value);
   });
 }
 
@@ -134,10 +137,11 @@ function remove(task, number){
     tasks.splice(-1);
   }
   else {
-    tasks.splice(parseInt(number)-1, 1)
+      if (i.includes(parseInt(number))){
+        tasks.splice(parseInt(number)-1, 1);
+      }else console.log('the number entered does not exist')
   }
 }
-
 /**
  * Exits the application
  *
