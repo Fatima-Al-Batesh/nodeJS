@@ -72,7 +72,6 @@ function unknownCommand(c){
   console.log('unknown command: "'+c.trim()+'"')
 }
 
-
 /**
  * Says hello
  * @param  {string} x hello
@@ -83,7 +82,25 @@ function hello(x,y){
  console.log(x + ' ' + y +'!');
 }
 
+/**
+ * Lists all the possible commands
+ *
+ * @returns {void}
+ */
+function help(){
+  console.log('     --hello                   Says hello!\n')
+  console.log('     --hello <name>            Says hello + name!\n')
+  console.log('     --help                    Lists all the possible commands\n')
+  console.log('     --list                    Lists all tasks\n')
+  console.log('     --add <task>              Adds a task to the list of tasks\n')
+  console.log('     --remove                  removes the last task\n')
+  console.log('     --remove <task number>    removes the task of this number\n')
+  console.log('     --quit/exit               Exits the application\n')
+}
+
 var tasks=['buy bread', 'do exercise']
+
+
 /**
  * add new tasks
  * @param  {string} task the new task
@@ -95,6 +112,17 @@ function add(text, task){
   }
   else tasks.push(task);
  }
+
+ /**
+ * Lists all tasks
+ *
+ * @returns {void}
+ */
+function list(){
+  tasks.forEach(function callback(value, index) {
+    console.log(index+1 + '- [ ] ' + value);
+  });
+}
 
 /**
  * removes the last task
@@ -110,7 +138,6 @@ function remove(task, number){
   }
 }
 
-
 /**
  * Exits the application
  *
@@ -119,29 +146,6 @@ function remove(task, number){
 function quit(){
   console.log('Quitting now, goodbye!')
   process.exit();
-}
-
-/**
- * Lists all the possible commands
- *
- * @returns {void}
- */
-function help(){
-  console.log('     hello              --Says hello!\n')
-  console.log('     hello + name       --Says hello + name!\n')
-  console.log('     help               --Lists all the possible commands\n')
-  console.log('     quit/exit          --Exits the application\n')
-}
-
-/**
- * Lists all tasks
- *
- * @returns {void}
- */
-function list(){
-  tasks.forEach(function callback(value, index) {
-    console.log(index+1 + '- [ ] ' + value);
-  });
 }
 
 
