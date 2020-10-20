@@ -58,6 +58,12 @@ function onDataReceived(text) {
   else if(text0 === 'edit' || text === 'edit'){
     edit(text, text1);
   }
+  else if(text0 === 'check' || text === 'check'){
+    check(text, text1);
+  }
+  else if(text0 === 'uncheck' || text === 'uncheck'){
+    uncheck(text, text1);
+  }
   else{
     unknownCommand(text);
   }
@@ -101,35 +107,42 @@ function help(){
   console.log('     --quit/exit               Exits the application\n')
 }
 
-var tasks=['buy bread', 'do exercise']
+var tasks=[
+            {task: 'buy bread', done: false},
+            {task: 'do exercise', done: false}
+          ];
 
 
 /**
  * add new tasks
- * @param  {string} task the new task
+ * @param  {string} tsk the new task
  * @returns {void}
  */
-function add(text, task){
+function add(text, tsk){
   if (text === 'add'){
     console.log("Error: You didn't enter the task")
   }
-  else tasks.push(task);
+  else tasks.push({task:tsk, done:false});
  }
  
-
+const i= [];
  /**
  * Lists all tasks
  *
  * @returns {void}
  */
-var done=false;
 function list(){
-  tasks.forEach(function callback(value, index) {
-  if (done){
-    console.log(index+1 + ' - [✓] ' + value);
-  }else console.log(index+1 + ' - [ ] ' + value);
+  tasks.forEach(function callback(item, index) {
+    i[index] = index+1;
+  if (item.done == true){
+    console.log(index+1 + ' - [✓] ' + item.task);
+  }else{ 
+  console.log(index+1 + ' - [ ] ' + item.task);
+    }
   });
 }
+
+
 
 /**
  * removes the last task
@@ -141,9 +154,9 @@ function remove(task, number){
     tasks.splice(-1);
   }
   else {
-      if (parseInt(number)<= tasks.length+1){
+      if (parseInt(number)<= i.length+1){
         tasks.splice(parseInt(number)-1, 1);
-      }else console.log('the number entered does not exist')
+      }else console.log('Error: the number entered does not exist')
   }
 }
 
@@ -152,23 +165,46 @@ function remove(task, number){
  * @param  {string} task the new task
  * @returns {void}
  */
-function edit(text, task){
-  var number = task.substring(0,task.indexOf(' '))
+function edit(text, tsk){
+  var number = tsk.substring(0,tsk.indexOf(' '))
   number = parseInt(number)
-  var newTask = task.substring(task.indexOf(' ')+1)
+  var newTask = tsk.substring(tsk.indexOf(' ')+1)
   
   if (text === 'edit'){
     console.log("Error: You didn't enter the task")
   }
   else if (isNaN(number)){
-    tasks.splice(-1,1,task)
+    tasks.splice(-1,1,{task: tsk, done:false})
     
   }
   else{
-    tasks.splice(number-1,1,newTask)
+    tasks.splice(number-1,1,{task: newTask, done:false})
   }
  }
+
+ /**
+ * check tasks
+ * @param  {string} number the new task
+ * @returns {void}
+ */
+function check(text, number){
+  if (text === 'check'){
+    console.log("Error: You didn't enter the number of task")
+  }
+  else tasks[number-1].done=true;
+ }
  
+/**
+ * uncheck tasks
+ * @param  {string} number the new task
+ * @returns {void}
+ */
+function uncheck(text, number){
+  if (text === 'uncheck'){
+    console.log("Error: You didn't enter the number of task")
+  }
+  else tasks[number-1].done=false;
+ }
 
 /**
  * Exits the application
