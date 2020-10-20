@@ -102,10 +102,7 @@ function help(){
 }
 
 var tasks=['buy bread', 'do exercise']
-const i=[];
-tasks.forEach(function callback(value, index) {
-  i[index]=index+1;
-});
+
 
 /**
  * add new tasks
@@ -125,10 +122,12 @@ function add(text, task){
  *
  * @returns {void}
  */
-
+var done=false;
 function list(){
   tasks.forEach(function callback(value, index) {
-    console.log(index+1 + ' - [ ] ' + value);
+  if (done){
+    console.log(index+1 + ' - [✓] ' + value);
+  }else console.log(index+1 + ' - [ ] ' + value);
   });
 }
 
@@ -142,11 +141,12 @@ function remove(task, number){
     tasks.splice(-1);
   }
   else {
-      if (i.includes(parseInt(number))){
+      if (parseInt(number)<= tasks.length+1){
         tasks.splice(parseInt(number)-1, 1);
       }else console.log('the number entered does not exist')
   }
 }
+
 /**
  * edit a task
  * @param  {string} task the new task
@@ -162,6 +162,7 @@ function edit(text, task){
   }
   else if (isNaN(number)){
     tasks.splice(-1,1,task)
+    
   }
   else{
     tasks.splice(number-1,1,newTask)
