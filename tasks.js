@@ -1,6 +1,15 @@
 var fs = require ('fs');
-var data = fs.readFileSync('database.json');
-var tasks = JSON.parse(data);
+
+try{
+  if (fs.existsSync(process.argv[2])){
+    var data = fs.readFileSync(process.argv[2]);
+  }else{
+    var data = fs.readFileSync('database.json');
+  }
+  var tasks = JSON.parse(data);
+}catch(err){
+  console.error(err);
+}
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -114,6 +123,7 @@ function help(){
 }
 
 
+
 /**
  * add new tasks
  * @param  {string} tsk the new task
@@ -126,7 +136,6 @@ function add(text, tsk){
   else tasks.push({task:tsk, done:false});
  }
  
-const i= [];
  /**
  * Lists all tasks
  *
@@ -134,7 +143,6 @@ const i= [];
  */
 function list(){
   tasks.forEach(function callback(item, index) {
-    i[index] = index+1;
   if (item.done == true){
     console.log(index+1 + ' - [✓] ' + item.task);
   }else{ 
@@ -155,7 +163,7 @@ function remove(task, number){
     tasks.splice(-1);
   }
   else {
-      if (parseInt(number)<= i.length+1){
+      if (parseInt(number)<= tasks.length+1){
         tasks.splice(parseInt(number)-1, 1);
       }else console.log('Error: the number entered does not exist')
   }
@@ -192,8 +200,13 @@ function check(text, number){
   if (text === 'check'){
     console.log("Error: You didn't enter the number of task")
   }
-  else tasks[number-1].done=true;
+  else {
+    if (parseInt(number)<= tasks.length){
+      tasks[number-1].done = true;
+    }else console.log('Error: the number entered does not exist')
+  }
  }
+ 
  
 /**
  * uncheck tasks
@@ -204,8 +217,11 @@ function uncheck(text, number){
   if (text === 'uncheck'){
     console.log("Error: You didn't enter the number of task")
   }
-  else tasks[number-1].done=false;
- }
+  if (parseInt(number)<= tasks.length){
+    tasks[number-1].done = false;
+  }else console.log('Error: the number entered does not exist')
+  }
+ 
 
 /**
  * Exits the application
@@ -214,7 +230,10 @@ function uncheck(text, number){
  */
 function quit(){
   var data= JSON.stringify(tasks, null, 2)
-  fs.writeFileSync('database.json',data, 'utf8');
+  if (fs.existsSync(process.argv[2])){
+    fs.writeFileSync(process.argv[2],data, 'utf8');
+
+  }else fs.writeFileSync('database.json',data, 'utf8');
   console.log('Quitting now, goodbye!')
   process.exit();
 }
